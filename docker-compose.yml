@@ -1,0 +1,15 @@
+version: "3"
+services:
+  food-finder-app:
+    tty: true
+    stdin_open: true
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./:/usr/src/app/
+    entrypoint:
+      - "/bin/bash"
+    container_name: "food-finder-app"
