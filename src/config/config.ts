@@ -1,8 +1,8 @@
 const env = process.env.ENV;
-import * as prodSettings from './prod.js';
-import * as localSettings from './local.js';
+import * as prodSettings from './prod';
+import * as localSettings from './local';
 
-let config = null;
+let config: object | undefined = {};
 
 switch(env) {
   case 'prod':

@@ -14,6 +14,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+ENV PATH ./node_modules/.bin:$PATH
 
 EXPOSE 8080
 
