@@ -1,6 +1,6 @@
-import config from './config';
-import dotenv from 'dotenv';
-import _ from 'lodash';
+import config from "./config";
+import dotenv from "dotenv";
+import _ from "lodash";
 
 dotenv.config();
 
@@ -20,7 +20,7 @@ class ConfigManager {
    * @param {String} key
    * @param {Any} defaultValue
    */
-  async get(key: string, defaultValue: any): Promise<string | undefined> {
+  async get(key: string, defaultValue: any = null): Promise<string | undefined> {
     if (!_.isUndefined(process.env[key])) {
       return process.env[key];
     }

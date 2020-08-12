@@ -1,3 +1,3 @@
-const config = {}
+const config = {};
 
-export {config as config};
+export { config as config };

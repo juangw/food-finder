@@ -7,7 +7,7 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true, // allows "import React from 'react';" syntax vs "let React = require('react');"
+    "esModuleInterop": true, // allows "import React from "react";" syntax vs "let React = require("react");"
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "react", // allows TS compiler to recognize JSX syntax
@@ -23,5 +23,9 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017"
+  },
+  "rules": {
+    "trailing-comma": [true],
+    "no-string-throw": false
   }
 }

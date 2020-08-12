@@ -1,14 +1,14 @@
 const env = process.env.ENV;
-import * as prodSettings from './prod';
-import * as localSettings from './local';
+import * as prodSettings from "./prod";
+import * as localSettings from "./local";
 
 let config: object | undefined = {};
 
-switch(env) {
-  case 'prod':
+switch (env) {
+  case "prod":
     config = Object.assign({}, prodSettings.config);
     break;
-  case 'local':
+  case "local":
     config = Object.assign({}, localSettings.config);
     break;
   default:

@@ -12,7 +12,7 @@ docker-compose down
 
 Once inside the container run, and the website will be at the address `localhost:8080`:
 ```bash
-node index.js
+ts-node src/app.ts
 ```
 
 ## How to lint
