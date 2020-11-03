@@ -1,3 +1,3 @@
-const config = {test: 1};
+const config = {PORT: 8080};
 
 export { config as config };

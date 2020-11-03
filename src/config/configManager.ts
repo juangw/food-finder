@@ -16,11 +16,11 @@ class ConfigManager {
   }
 
   /**
-   * Return a config key or the default value asynchronously
+   * Return a config key or the default value
    * @param {String} key
    * @param {Any} defaultValue
    */
-  async get(key: string, defaultValue: any = null): Promise<string | undefined> {
+  get(key: string, defaultValue: any = null): string | undefined {
     if (!_.isUndefined(process.env[key])) {
       return process.env[key];
     }

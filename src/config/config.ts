@@ -13,7 +13,6 @@ switch (env) {
     break;
   default:
     throw new Error("process.env.ENV must be {prod|local}");
-    break;
 }
 
 export default config;
