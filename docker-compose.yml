@@ -15,3 +15,12 @@ services:
     entrypoint:
       - "/bin/bash"
     container_name: "food-finder-app"
+
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27017:27017
+    container_name: "mongo"
