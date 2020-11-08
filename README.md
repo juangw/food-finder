@@ -14,10 +14,13 @@ Once inside the container you can start the back end of the service by running:
 ```bash
 API_KEY=<API Key From Spoonacular> ts-node backend/app.ts
 ```
-The backend end will be accessible on port 8080:
+
+The backend end should then be accessible on port 8080:
 ```bash
 curl http://localhost:8080/healthcheck
 ```
+
+You can view the swagger spec for all endpoint by navigating to http://localhost:8080/api-docs/
 
 ## How to lint
 ```
