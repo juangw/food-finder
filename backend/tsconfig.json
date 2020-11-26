@@ -1,17 +1,26 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "coverage"],
+  "include": [
+    "*",
+  ],
+  "exclude": [
+    "node_modules"
+  ],
   "outdir": "build",
   "compileOnSave": true,
   "esModuleInterop": true,
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true, // allows "import React from "react";" syntax vs "let React = require("react");"
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "react", // allows TS compiler to recognize JSX syntax
-    "lib": ["dom", "dom.iterable", "esnext", "ES2016.Array.Include"],
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext",
+      "ES2016.Array.Include"
+    ],
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
@@ -22,10 +31,13 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "target": "es6"
   },
   "rules": {
-    "trailing-comma": [true],
+    "trailing-comma": [
+      true
+    ],
     "no-string-throw": false
   }
 }
+

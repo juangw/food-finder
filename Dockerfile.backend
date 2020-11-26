@@ -1,0 +1,17 @@
+FROM node:14
+
+# Create app directory
+RUN mkdir -p /usr/src/app/backend
+WORKDIR /usr/src/app/backend
+
+# Install app dependencies
+COPY backend/package.json package.json
+RUN yarn build
+
+# Bundle app source
+COPY ./backend /usr/src/app/backend
+ENV PATH="./node_modules/.bin:${PATH}"
+
+EXPOSE 8080
+
+CMD [ "yarn", "start" ]

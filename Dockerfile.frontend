@@ -1,0 +1,18 @@
+FROM node:14
+
+# Create app directory
+RUN mkdir -p /usr/src/app/frontend
+WORKDIR /usr/src/app/frontend
+
+# Install app dependencies
+COPY frontend/package.json package.json
+RUN yarn build
+
+# Bundle app source
+COPY ./frontend /usr/src/app/frontend
+ENV PATH="./node_modules/.bin:${PATH}"
+
+EXPOSE 3000
+
+# Command to run the app
+CMD [ "yarn", "start" ]

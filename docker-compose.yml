@@ -1,11 +1,11 @@
 version: "3"
 services:
-  food-finder-app:
+  food-finder-backend-app:
     tty: true
     stdin_open: true
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.backend
     environment:
       - ENV=local
     ports:
@@ -14,7 +14,23 @@ services:
       - ./:/usr/src/app/
     entrypoint:
       - "/bin/bash"
-    container_name: "food-finder-app"
+    container_name: "food-finder-backend-app"
+
+  food-finder-frontend-app:
+    tty: true
+    stdin_open: true
+    build:
+      context: ./
+      dockerfile: Dockerfile.frontend
+    environment:
+      - ENV=local
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app/
+    entrypoint:
+      - "/bin/bash"
+    container_name: "food-finder-frontend-app"
 
   mongo:
     image: mongo:latest
