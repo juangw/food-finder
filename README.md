@@ -13,7 +13,7 @@ docker-compose down
 
 Once inside the container you can start the back end of the service by running:
 ```bash
-API_KEY=<API Key From Spoonacular> ts-node backend/app.ts
+API_KEY=<API Key From Spoonacular> ts-node app.ts
 ```
 
 The backend end should then be accessible on port 8080:
