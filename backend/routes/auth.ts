@@ -49,8 +49,8 @@ authRouter.post("/login", async (req: Request, res: Response) => {
     const user = users.find(u => { return u.username === username && u.password === password; });
 
     if (user) {
-        // Generate an access token
-        const accessToken = jwt.sign({ username: username }, accessTokenSecret);
+        // Generate an access token viable for a week
+        const accessToken = jwt.sign({ username: username }, accessTokenSecret, { expiresIn: 604800 });
 
         return res.json({
             accessToken
