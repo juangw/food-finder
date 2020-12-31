@@ -5,7 +5,6 @@ RUN mkdir -p /usr/src/app/backend
 WORKDIR /usr/src/app/backend
 
 # Install app dependencies
-COPY backend/package.json package.json
 COPY ./backend .
 RUN yarn build
 ENV PATH="./node_modules/.bin:${PATH}"

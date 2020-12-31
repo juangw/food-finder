@@ -18,7 +18,7 @@ jobs:
       run: |
         docker-compose build
         docker-compose up -d
-    - name: Lint with frontend and backend with tslint
+    - name: Lint frontend and backend with tslint
       run: |
-        docker-compose exec -T food-finder-frontend-app ls
-        docker-compose exec -T food-finder-backend-app ls
+        docker-compose exec -T food-finder-frontend-app yarn run lint
+        docker-compose exec -T food-finder-backend-app yarn run lint

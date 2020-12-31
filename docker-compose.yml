@@ -12,6 +12,7 @@ services:
       - "8080:8080"
     volumes:
       - ./:/usr/src/app/
+      - /usr/src/app/backend/node_modules
     entrypoint:
       - "/bin/bash"
     container_name: "food-finder-backend-app"
@@ -28,6 +29,7 @@ services:
       - "3000:3000"
     volumes:
       - ./:/usr/src/app/
+      - /usr/src/app/frontend/node_modules
     entrypoint:
       - "/bin/bash"
     container_name: "food-finder-frontend-app"
