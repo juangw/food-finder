@@ -5,11 +5,8 @@ RUN mkdir -p /usr/src/app/frontend
 WORKDIR /usr/src/app/frontend
 
 # Install app dependencies
-COPY frontend/package.json package.json
+COPY ./frontend .
 RUN yarn build
-
-# Bundle app source
-COPY ./frontend /usr/src/app/frontend
 ENV PATH="./node_modules/.bin:${PATH}"
 
 EXPOSE 3000

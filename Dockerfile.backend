@@ -6,10 +6,8 @@ WORKDIR /usr/src/app/backend
 
 # Install app dependencies
 COPY backend/package.json package.json
+COPY ./backend .
 RUN yarn build
-
-# Bundle app source
-COPY ./backend /usr/src/app/backend
 ENV PATH="./node_modules/.bin:${PATH}"
 
 EXPOSE 8080
