@@ -49,9 +49,9 @@ authRouter.post("/login", async (req: Request, res: Response) => {
             "password": {S: password},
         }
     };
-    return ddb.getItem(queryParams, function (err, data) {
-        if (err) return res.status(500).send(`Encountered Unexpected Error: ${err}`);
-        if (!data.Item) return res.status(403).send("Invalid username and password provided");
+    return ddb.getItem(queryParams, function (err: any, data: any) {
+        if (err) { return res.status(500).send(`Encountered Unexpected Error: ${err}`); }
+        if (!data.Item) { return res.status(403).send("Invalid username and password provided"); }
 
         // Generate an access token viable for a week
         const accessToken = jwt.sign({ username: username }, accessTokenSecret, { expiresIn: 604800 });
