@@ -48,7 +48,7 @@ userRouter.post("/", async (req: Request, res: Response) => {
         }
     };
     ddb.putItem(params, function (err: any, _: any) {
-        if (err) return res.status(500).send(`Encountered Unexpected Error: ${err}`);
+        if (err) { return res.status(500).send(`Encountered Unexpected Error: ${err}`); }
         return res.json({
             username,
             password
