@@ -1,6 +1,15 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import LRU from "lru-cache";
 
 import configManager from "../config/configManager";
+
+const options = {
+    max: 500,
+    length: function (n: any, key: any) { return n * 2 + key.length },
+    dispose: function (_: any, n: any) { n.close() },
+    maxAge: 1000 * 60 * 60,
+}
+const cache = new LRU(options);
 
 interface RequestParams {
     [key: string]: any;
@@ -26,11 +35,15 @@ class SpoontacularRequest {
     }
 
     get(requestParams: RequestParams): Promise<AxiosResponse<any>> {
-        return axios.get(
+        let cacheResult = cache.get(`${this.urlBase}_${this.urlPath}_${requestParams}`);
+        if (cacheResult) { return cacheResult };
+        let requestResult = axios.get(
             `${this.url}/${this.urlBase}/${this.urlPath}`, {
                 ...this.config, params: { ...this.config?.params, ...requestParams }
             }
         );
+        cache.set(`${this.urlBase}_${this.urlPath}_${requestParams}`, requestResult);
+        return requestResult;
     }
 }
 
