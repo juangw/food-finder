@@ -8,11 +8,13 @@ services:
       dockerfile: Dockerfile.backend
     environment:
       - ENV=local
+      - AWS_SDK_LOAD_CONFIG=1
     ports:
       - "8080:8080"
     volumes:
       - ./:/usr/src/app/
       - /usr/src/app/backend/node_modules
+      - ~/.aws:/root/.aws
     entrypoint:
       - "/bin/bash"
     container_name: "food-finder-backend-app"
@@ -34,11 +36,10 @@ services:
       - "/bin/bash"
     container_name: "food-finder-frontend-app"
 
-  mongo:
-    image: mongo:latest
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+  dynamodb:
+    image: amazon/dynamodb-local
+    hostname: dynamodb-local
+    container_name: dynamodb-local
     ports:
-      - 27017:27017
-    container_name: "mongo"
+      - "8000:8000"
+    container_name: "dynamodb"

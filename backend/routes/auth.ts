@@ -1,19 +1,18 @@
 import { Request, Response } from "express";
-import { MongoClient } from "mongodb";
 import express from "express";
 import jwt from "jsonwebtoken";
+import AWS from "aws-sdk";
 
 import configManager from "../config/configManager";
 
 const accessTokenSecret = configManager.get("ACCESS_SECRET_TOKEN") || "";
-const uri = configManager.get("MONGO_URI") || "";
+const dynamoDBEndpoint = configManager.get("DYNAMO_DB_ENDPOINT") || "";
 
-async function getUser(username: string, password: string) {
-    const db = await MongoClient.connect(uri);
-    const users = await db.db("admin").collection("users").find({ username, password }).toArray();
-    await db.close();
-    return users;
-}
+// Set the region
+AWS.config.update({region: "us-east-1"});
+
+// Create the DynamoDB service object
+var ddb = new AWS.DynamoDB({ endpoint: new AWS.Endpoint(dynamoDBEndpoint) });
 
 /**
  * @swagger
@@ -43,21 +42,23 @@ var authRouter = express.Router();
 authRouter.post("/login", async (req: Request, res: Response) => {
     // Read username and password from request body
     const { username, password } = req.body;
-    let users: any[] = await getUser(username, password);
-    
-    // Filter user from the users array by username and password
-    const user = users.find(u => { return u.username === username && u.password === password; });
+    const queryParams = {
+        TableName: "users",
+        Key: {
+            "username": {S: username},
+            "password": {S: password},
+        }
+    };
+    return ddb.getItem(queryParams, function (err, data) {
+        if (err) return res.status(500).send(`Encountered Unexpected Error: ${err}`);
+        if (!data.Item) return res.status(403).send("Invalid username and password provided");
 
-    if (user) {
         // Generate an access token viable for a week
         const accessToken = jwt.sign({ username: username }, accessTokenSecret, { expiresIn: 604800 });
-
-        return res.json({
+        return res.status(200).json({
             accessToken
         });
-    } else {
-        return res.send("Username or password incorrect");
-    }
+    });
 });
 
 export default authRouter;

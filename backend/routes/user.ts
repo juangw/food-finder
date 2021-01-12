@@ -1,16 +1,16 @@
 import { Request, Response } from "express";
-import { MongoClient } from "mongodb";
 import express from "express";
+import AWS from "aws-sdk";
 
 import configManager from "../config/configManager";
 
-const uri = configManager.get("MONGO_URI") || "";
+const dynamoDBEndpoint = configManager.get("DYNAMO_DB_ENDPOINT") || "";
 
-async function createUser(username: string, password: string) {
-    const db = await MongoClient.connect(uri);
-    await db.db("admin").collection("users").insertOne({ username, password });
-    await db.close();
-}
+// Set the region
+AWS.config.update({region: "us-east-1"});
+
+// Create the DynamoDB service object
+var ddb = new AWS.DynamoDB({ endpoint: new AWS.Endpoint(dynamoDBEndpoint) });
 
 /**
  * @swagger
@@ -40,11 +40,19 @@ var userRouter = express.Router();
 userRouter.post("/", async (req: Request, res: Response) => {
     // Read username and password from request body
     const { username, password } = req.body;
-    await createUser(username, password);
-
-    return res.json({
-        username,
-        password
+    var params = {
+        TableName: "users",
+        Item: {
+            "username" : {S: username},
+            "password" : {S: password},
+        }
+    };
+    ddb.putItem(params, function (err, _) {
+        if (err) return res.status(500).send(`Encountered Unexpected Error: ${err}`);
+        return res.json({
+            username,
+            password
+        });
     });
 });
 
