@@ -20,5 +20,5 @@ jobs:
         docker-compose up -d
     - name: Lint frontend and backend with tslint
       run: |
-        docker-compose exec -T food-finder-frontend-app node_modules/.bin/tslint --quiet--project .
-        docker-compose exec -T food-finder-backend-app node_modules/.bin/tslint --quiet--project .
+        docker-compose exec -T food-finder-frontend-app node_modules/.bin/tslint --quiet --project .
+        docker-compose exec -T food-finder-backend-app node_modules/.bin/tslint --quiet --project .
