@@ -4,13 +4,13 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import bodyParser from "body-parser";
 
-import logger from "./utils/logger";
 import configManager from "./config/configManager";
 import recipeRouter from "./routes/recipe";
 import healthcheckRouter from "./routes/healthcheck";
 import authRouter from "./routes/auth";
 import userRouter from "./routes/user";
 import authenticateJWT from "./utils/jwtAuthentication";
+import { logger, expressLogger } from "./utils/logger";
 
 const app = express();
 const port = configManager.get("PORT", "8080");
@@ -53,6 +53,7 @@ const options = {
     apis: ["models/schemas/*", "routes/*"],
 };
 
+app.use(expressLogger);
 app.use(bodyParser.json());
 
 app.get("/", (req: Request, res: Response) => res.send("Hello World!"));

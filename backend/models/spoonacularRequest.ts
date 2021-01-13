@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { Request } from "express";
 import LRU from "lru-cache";
 
 import configManager from "../config/configManager";
@@ -16,12 +17,19 @@ interface RequestParams {
 }
 
 class SpoontacularRequest {
+    private req: Request;
     private url: string | undefined;
     private urlBase: string;
     private urlPath: string;
     private config: AxiosRequestConfig | undefined;
 
-    constructor(urlBase: string, urlPath: string, config: AxiosRequestConfig | undefined = undefined) {
+    constructor(
+        req: Request,
+        urlBase: string,
+        urlPath: string,
+        config: AxiosRequestConfig | undefined = undefined,
+    ) {
+        this.req = req;
         this.url = configManager.get("SPOONACULAR_API_URL", "http://localhost.com");
         this.urlBase = urlBase;
         this.urlPath = urlPath;
@@ -37,6 +45,13 @@ class SpoontacularRequest {
     get(requestParams: RequestParams): Promise<AxiosResponse<any>> {
         let cacheResult = cache.get(`${this.urlBase}_${this.urlPath}_${requestParams}`);
         if (cacheResult) { return cacheResult; }
+        this.req.log.info(
+            {
+                SpoonacularEndpoint: `${this.url}/${this.urlBase}/${this.urlPath}`,
+                SpoonacularParams: `${JSON.stringify(requestParams)}`,
+            },
+            "Calling Spoonacular"
+        );
         let requestResult = axios.get(
             `${this.url}/${this.urlBase}/${this.urlPath}`, {
                 ...this.config, params: { ...this.config?.params, ...requestParams }
