@@ -51,7 +51,7 @@ userRouter.post("/", async (req: Request, res: Response) => {
     };
     ddb.updateItem(params, function (err: AWS.AWSError, result: any) {
         if (err && err.code === "ConditionalCheckFailedException") {
-            return res.status(400).send("Unable to create duplicate username")
+            return res.status(400).send("Unable to create duplicate username");
         }
         if (err) { return res.status(500).send(`Encountered Unexpected Error: ${err}`); }
         return res.json(result);
@@ -88,7 +88,7 @@ userRouter.delete("/", async (req: Request, res: Response) => {
     };
     ddb.deleteItem(params, function (err: any, result: any) {
         if (err) { return res.status(500).send(`Encountered Unexpected Error: ${err}`); }
-        if (!result.hasOwnProperty("Attributes")) { return res.status(400).send("Unable to find user to delete") }
+        if (!result.hasOwnProperty("Attributes")) { return res.status(400).send("Unable to find user to delete"); }
         return res.json(result);
     });
 });

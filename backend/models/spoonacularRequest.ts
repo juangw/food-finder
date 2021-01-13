@@ -5,10 +5,10 @@ import configManager from "../config/configManager";
 
 const options = {
     max: 500,
-    length: function (n: any, key: any) { return n * 2 + key.length },
-    dispose: function (_: any, n: any) { n.close() },
+    length: function (n: any, key: any) { return n * 2 + key.length; },
+    dispose: function (_: any, n: any) { n.close(); },
     maxAge: 1000 * 60 * 60,
-}
+};
 const cache = new LRU(options);
 
 interface RequestParams {
@@ -36,7 +36,7 @@ class SpoontacularRequest {
 
     get(requestParams: RequestParams): Promise<AxiosResponse<any>> {
         let cacheResult = cache.get(`${this.urlBase}_${this.urlPath}_${requestParams}`);
-        if (cacheResult) { return cacheResult };
+        if (cacheResult) { return cacheResult; }
         let requestResult = axios.get(
             `${this.url}/${this.urlBase}/${this.urlPath}`, {
                 ...this.config, params: { ...this.config?.params, ...requestParams }
