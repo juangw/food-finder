@@ -1,0 +1,34 @@
+.navBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-bottom: 0 !important;
+}
+
+.navBar li a {
+    color: black;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.navBar {
+    display: inline-block;
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navBar a {
+    display: inline-block;
+    color: black;
+    padding: calc(15px + 1vmin);
+    text-decoration: none;
+}
+
+.navBar a:hover {
+    color: white;
+}
