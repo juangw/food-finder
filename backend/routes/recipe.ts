@@ -19,7 +19,7 @@ var recipeRouter = express.Router();
  *      summary: Search recipes by arguments
  *      tags: [Recipe]
  *      parameters:
- *        - in: path
+ *        - in: query
  *          name: query
  *          type: string
  *          required: false
@@ -33,10 +33,13 @@ var recipeRouter = express.Router();
  *                $ref: '#/components/schemas/Recipe'
  */
 recipeRouter.get("/complexSearch", async function(req: Request, res: Response) {
-    var request = new SpoontacularRequest("recipes", "complexSearch");
+    var request = new SpoontacularRequest(req, "recipes", "complexSearch");
     return request.get(req.query)
-      .then((response) => res.send(response.data))
-      .catch(error => res.send(error));
+      .then((response) => res.status(200).send(response.data))
+      .catch(error => {
+        req.log.error(error);
+        res.status(400).send(error);
+      });
 });
 
 /**
@@ -55,10 +58,13 @@ recipeRouter.get("/complexSearch", async function(req: Request, res: Response) {
  *                $ref: '#/components/schemas/Recipe'
  */
 recipeRouter.get("/findByNutrients", async function(req: Request, res: Response) {
-    var request = new SpoontacularRequest("recipes", "findByNutrients");
+    var request = new SpoontacularRequest(req, "recipes", "findByNutrients");
     return request.get(req.query)
-      .then((response) => res.send(response.data))
-      .catch(error => res.send(error));
+      .then((response) => res.status(200).send(response.data))
+      .catch(error => {
+        req.log.error(error);
+        res.status(400).send(error);
+      });
 });
 
 /**
@@ -77,10 +83,13 @@ recipeRouter.get("/findByNutrients", async function(req: Request, res: Response)
  *                $ref: '#/components/schemas/Recipe'
  */
 recipeRouter.get("/findByIngredients", async function(req: Request, res: Response) {
-    var request = new SpoontacularRequest("recipes", "findByIngredients");
+    var request = new SpoontacularRequest(req, "recipes", "findByIngredients");
     return request.get(req.query)
-      .then((response) => res.send(response.data))
-      .catch(error => res.send(error));
+      .then((response) => res.status(200).send(response.data))
+      .catch(error => {
+        req.log.error(error);
+        res.status(400).send(error);
+      });
 });
 
 export default recipeRouter;
