@@ -29,7 +29,7 @@
     "@types/pino": "^6.3.3",
     "@types/swagger-jsdoc": "^3.0.2",
     "@types/swagger-ui-express": "^4.1.2",
-    "aws-sdk": "^2.825.0",
+    "aws-sdk": "^2.1354.0",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
